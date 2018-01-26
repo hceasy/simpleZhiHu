@@ -2,8 +2,8 @@
 // @name            极简知乎
 // @version         18.1.01
 // @author          hceasy
-// @updateURL       https://hceasy.com/app/simpleZhiHu.js
-// @downloadURL     https://hceasy.com/app/simpleZhiHu.js
+// @updateURL       https://hceasy.com/app/simpleZhiHu.meta.js
+// @downloadURL     https://hceasy.com/app/simpleZhiHu.user.js
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
 // @match           *://www.zhihu.com/question/*
