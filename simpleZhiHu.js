@@ -32,7 +32,7 @@
 	//顶部关键词
 	cssFix.innerHTML += ".QuestionHeader-tags{display:none !important;}"
 	//问题相关撑满
-	cssFix.innerHTML += ".QuestionHeader-content{width:100%;}"
+	cssFix.innerHTML += ".QuestionHeader-content{width:100% !important;}"
 	//内容图片最大100px
 	cssFix.innerHTML += ".origin_image{max-width:100px;}"
 	document.getElementsByTagName( 'head' )[ 0 ].appendChild( cssFix );
