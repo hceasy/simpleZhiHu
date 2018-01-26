@@ -24,6 +24,8 @@
   点击[simpleZhiHu](https://hceasy.com/app/simpleZhiHu.user.js)下载,
   
 3.浏览知乎某个问题列表,页面加载完便会生效.
+### 效果
+![](https://hceasy.com/app/demo.png)
 ### 备注
 
 目前只适配了问题列表页面.
