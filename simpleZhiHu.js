@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         18.1.01
+// @version         18.6.26
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
