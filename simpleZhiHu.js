@@ -2,8 +2,7 @@
 // @name            极简知乎
 // @version         18.1.01
 // @author          hceasy
-// @updateURL       https://hceasy.com/app/simpleZhiHu.meta.js
-// @downloadURL     https://hceasy.com/app/simpleZhiHu.user.js
+// @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
 // @match           *://www.zhihu.com/question/*
@@ -33,8 +32,13 @@
 	cssFix.innerHTML += ".QuestionHeader-tags{display:none !important;}"
 	//问题相关撑满
 	cssFix.innerHTML += ".QuestionHeader-content{width:100% !important;}"
+  cssFix.innerHTML += ".QuestionHeader{min-width:auto !important;}"
 	//内容图片最大100px
 	cssFix.innerHTML += ".origin_image{max-width:100px;}"
+  //内容链接去特征
+  cssFix.innerHTML += ".LinkCard{margin:auto !important;display:inline !important;}.LinkCard-content{background-color: transparent;}.LinkCard-title{color:#999 !important}"
+  // 点赞
+  cssFix.innerHTML += ".VoteButton{color:#999 !important;background: none; !important}"
 	document.getElementsByTagName( 'head' )[ 0 ].appendChild( cssFix );
 	//右侧问题相关
 	document.getElementsByClassName( 'QuestionHeader-side' )[ 1 ].style.display = 'none';
