@@ -28,15 +28,16 @@
     cssFix.innerHTML += ".RichContent-actions{bottom:auto !important;}"
     //问题评论
     cssFix.innerHTML += ".QuestionHeader-footer{display:none !important;}"
-    //顶部关键词
     //直接屏蔽顶部问题相关
     cssFix.innerHTML += ".QuestionHeader{display:none !important;}"
+    cssFix.innerHTML += ".Question-main{margin:0 !important;}"
+    //顶部关键词
     cssFix.innerHTML += ".QuestionHeader-tags{display:none !important;}"
     //问题相关撑满
     cssFix.innerHTML += ".QuestionHeader-content{width:100% !important;}"
     cssFix.innerHTML += ".QuestionHeader{min-width:auto !important;}"
     //内容图片最大100px
-    cssFix.innerHTML += ".origin_image{max-width:100px;}"
+    cssFix.innerHTML += ".origin_image{max-width:300px !important;}"
     //内容链接去特征
     cssFix.innerHTML += ".LinkCard{margin:auto !important;display:inline !important;}.LinkCard-content{background-color: transparent;}.LinkCard-title{color:#999 !important}"
     // 点赞
