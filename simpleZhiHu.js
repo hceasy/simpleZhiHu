@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         18.9.13.1
+// @version         18.9.15.1
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
 // @match           *://www.zhihu.com/question/*
 // @match			*://www.zhihu.com/search*
-// @run-at          document-end
+// @run-at          document-idle
 // ==/UserScript==
 (function() {
   'use strict'
