@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         18.9.15.1
+// @version         18.9.17.1
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
 // @match           *://www.zhihu.com/question/*
 // @match			*://www.zhihu.com/search*
-// @run-at          document-idle
+// @run-at          document-end
 // ==/UserScript==
 (function() {
   'use strict'
@@ -32,16 +32,17 @@
   link.type = 'image/x-icon'
   link.rel = 'shortcut icon'
   link.href = fake_icon
-  document.getElementsByTagName('head')[0].appendChild(link)
-  switch (pageType) {
-    case 'question':
-      console.log('q')
-      fixQuestionPage()
-      break
-    case 'search':
-      console.log('s')
-      fixSearchPage()
-      break
+  window.onload = function() {
+    window.document.title = fake_title
+    document.getElementsByTagName('head')[0].appendChild(link)
+    switch (pageType) {
+      case 'question':
+        fixQuestionPage()
+        break
+      case 'search':
+        fixSearchPage()
+        break
+    }
   }
   function fixQuestionPage() {
     var cssFix = document.createElement('style')
