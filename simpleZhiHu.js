@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         18.9.17.1
+// @version         18.12.06.1
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -9,7 +9,7 @@
 // @match			*://www.zhihu.com/search*
 // @run-at          document-end
 // ==/UserScript==
-(function() {
+;(function() {
   'use strict'
   // 区分搜索问答页面
   let webUrl = window.location.pathname
@@ -22,18 +22,53 @@
   // 用GitHub的图标替换
   var fake_title = 'GitHub'
   var fake_icon = 'https://assets-cdn.github.com/favicon.ico'
-  // 改下标题
-  window.document.title = fake_title
-
   // icon也改了.(IE邪教,凉了,没的治)
   var link =
     document.querySelector("link[rel*='icon']") ||
     document.createElement('link')
-  link.type = 'image/x-icon'
-  link.rel = 'shortcut icon'
-  link.href = fake_icon
   window.onload = function() {
-    window.document.title = fake_title
+    let _t
+    let _q
+    if (typeof localStorage.szt === 'undefined') {
+      localStorage.szt = 'false'
+      localStorage.szq = 'false'
+    } else {
+      _t = localStorage.szt
+      _q = localStorage.szq
+    }
+    if (localStorage.szt === 'false') {
+      // 改下标题
+      window.document.title = fake_title
+      link.type = 'image/x-icon'
+      link.rel = 'shortcut icon'
+      link.href = fake_icon
+    }
+    document.onkeydown = function(event) {
+      var e = event || window.event
+      if (e.keyCode == 84 && e.ctrlKey && e.shiftKey && e.altKey) {
+        if (localStorage.szt === 'true') {
+          localStorage.szt = 'false'
+          alert('标题栏替换开启')
+        } else {
+          localStorage.szt = 'true'
+          alert('标题栏替换关闭')
+        }
+        window.location.reload()
+      }
+      if (e.keyCode == 81 && e.ctrlKey && e.shiftKey && e.altKey) {
+        if (localStorage.szq === 'true') {
+          localStorage.szq = 'false'
+          alert('问题显示开启')
+        } else {
+          localStorage.szq = 'true'
+          alert('问题显示关闭')
+        }
+        window.location.reload()
+      }
+    }
+    if (!localStorage.szq) {
+      window.document.title = fake_title
+    }
     document.getElementsByTagName('head')[0].appendChild(link)
     switch (pageType) {
       case 'question':
@@ -48,11 +83,12 @@
     var cssFix = document.createElement('style')
     // 吸底的评论栏
     cssFix.innerHTML += '.RichContent-actions{bottom:auto !important;}'
-    // 问题评论
-    cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
     // 直接屏蔽顶部问题相关
-    cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
-    cssFix.innerHTML += '.Question-main{margin:0 !important;}'
+    if (localStorage.szq === 'false') {
+      cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
+      cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
+      cssFix.innerHTML += '.Question-main{margin:0 !important;}'
+    }
     // 顶部关键词
     cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
     // 问题相关撑满
