@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         18.12.06.1
+// @version         18.12.13.1
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -8,9 +8,14 @@
 // @match           *://www.zhihu.com/question/*
 // @match			*://www.zhihu.com/search*
 // @run-at          document-end
+// @grant           GM_registerMenuCommand
+// @grant           GM_setValue
+// @grant           GM_getValue
 // ==/UserScript==
 ;(function() {
   'use strict'
+  GM_registerMenuCommand('隐藏/显示提问', showQuestion)
+  GM_registerMenuCommand('开启/关闭标题栏伪装', showFakeTitle)
   // 区分搜索问答页面
   let webUrl = window.location.pathname
   let pageType
@@ -20,56 +25,29 @@
     pageType = 'search'
   }
   // 用GitHub的图标替换
-  var fake_title = 'GitHub'
-  var fake_icon = 'https://assets-cdn.github.com/favicon.ico'
+  let fake_title = 'GitHub'
+  let fake_icon = 'https://assets-cdn.github.com/favicon.ico'
   // icon也改了.(IE邪教,凉了,没的治)
-  var link =
+  let link =
     document.querySelector("link[rel*='icon']") ||
     document.createElement('link')
   window.onload = function() {
-    let _t
-    let _q
-    if (typeof localStorage.szt === 'undefined') {
-      localStorage.szt = 'false'
-      localStorage.szq = 'false'
-    } else {
-      _t = localStorage.szt
-      _q = localStorage.szq
+    if (localStorage.szq || localStorage.szt) {
+      localStorage.removeItem('szq')
+      localStorage.removeItem('szt')
     }
-    if (localStorage.szt === 'false') {
-      // 改下标题
+    if (GM_getValue('fakeTitle') === undefined) {
+      GM_setValue('fakeTitle', true)
+      GM_setValue('showQuestion', true)
+    }
+    // 改下标题
+    if (GM_getValue('fakeTitle')) {
       window.document.title = fake_title
       link.type = 'image/x-icon'
       link.rel = 'shortcut icon'
       link.href = fake_icon
+      document.getElementsByTagName('head')[0].appendChild(link)
     }
-    document.onkeydown = function(event) {
-      var e = event || window.event
-      if (e.keyCode == 84 && e.ctrlKey && e.shiftKey && e.altKey) {
-        if (localStorage.szt === 'true') {
-          localStorage.szt = 'false'
-          alert('标题栏替换开启')
-        } else {
-          localStorage.szt = 'true'
-          alert('标题栏替换关闭')
-        }
-        window.location.reload()
-      }
-      if (e.keyCode == 81 && e.ctrlKey && e.shiftKey && e.altKey) {
-        if (localStorage.szq === 'true') {
-          localStorage.szq = 'false'
-          alert('问题显示开启')
-        } else {
-          localStorage.szq = 'true'
-          alert('问题显示关闭')
-        }
-        window.location.reload()
-      }
-    }
-    if (!localStorage.szq) {
-      window.document.title = fake_title
-    }
-    document.getElementsByTagName('head')[0].appendChild(link)
     switch (pageType) {
       case 'question':
         fixQuestionPage()
@@ -79,12 +57,32 @@
         break
     }
   }
+  function showFakeTitle() {
+    if (GM_getValue('fakeTitle') === true) {
+      GM_setValue('fakeTitle', false)
+      alert('不伪装标题栏')
+    } else {
+      GM_setValue('fakeTitle', true)
+      alert('伪装标题栏')
+    }
+    window.location.reload()
+  }
+  function showQuestion() {
+    if (GM_getValue('showQuestion') === true) {
+      GM_setValue('showQuestion', false)
+      alert('显示提问标题')
+    } else {
+      GM_setValue('showQuestion', true)
+      alert('隐藏提问标题')
+    }
+    window.location.reload()
+  }
   function fixQuestionPage() {
-    var cssFix = document.createElement('style')
+    let cssFix = document.createElement('style')
     // 吸底的评论栏
     cssFix.innerHTML += '.RichContent-actions{bottom:auto !important;}'
     // 直接屏蔽顶部问题相关
-    if (localStorage.szq === 'false') {
+    if (GM_getValue('showQuestion')) {
       cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
       cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
       cssFix.innerHTML += '.Question-main{margin:0 !important;}'
@@ -118,7 +116,7 @@
       '100%'
   }
   function fixSearchPage() {
-    var cssFix = document.createElement('style')
+    let cssFix = document.createElement('style')
     // header
     cssFix.innerHTML += 'header{display:none !important;}'
     // SearchTabs
