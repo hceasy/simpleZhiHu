@@ -25,14 +25,13 @@
   
 3.浏览知乎某个问题列表,页面加载完便会生效.
 
-### 快捷键
-  <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>q</kbd> 切换问题显示  
-  <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>t</kbd> 切换标题显示
 ### 效果
 ![](https://hceasy.com/app/demo.png)
 ### 备注
 
-目前只适配了问题列表页面.
+目前只适配了问题列表与问题搜索列表.
+### 12.13更新
+- 优化了切换标题与问题显示功能
 ### 12.06更新
 - 加入切换标题与问题显示功能
 ### 9.13更新
