@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         19.06.19.1
+// @version         19.09.29.1
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -31,7 +31,7 @@
     }
     // 用GitHub的图标替换
     let fake_title = 'GitHub'
-    let fake_icon = 'https://assets-cdn.github.com/favicon.ico'
+    let fake_icon = 'https://github.githubassets.com/favicon.ico'
     // icon也改了.(IE邪教,凉了,没的治)
     let link =
         document.querySelector("link[rel*='icon']") ||
