@@ -21,7 +21,7 @@
   
 2.下载脚本安装
 
-  点击[simpleZhiHu](https://hceasy.com/app/simpleZhiHu.user.js)下载,
+  点击[simpleZhiHu](https://greasyfork.org/zh-CN/scripts/37823-%E6%9E%81%E7%AE%80%E7%9F%A5%E4%B9%8E)下载,
   
 3.浏览知乎某个问题列表,页面加载完便会生效.
 
