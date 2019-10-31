@@ -39,7 +39,6 @@
         }
         // 改下标题
         if (sConfig.fakeTitle === 'true') {
-            console.log(sConfig.fakeTitle)
             window.document.title = fake_title
             link.type = 'image/x-icon'
             link.rel = 'shortcut icon'
