@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         19.09.29.1
+// @version         0.1.14
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -11,14 +11,9 @@
 // @match			*://www.zhihu.com/follow
 // @match			*://www.zhihu.com/
 // @run-at          document-end
-// @grant           GM_registerMenuCommand
-// @grant           GM_setValue
-// @grant           GM_getValue
 // ==/UserScript==
 ; (function () {
     'use strict'
-    GM_registerMenuCommand('隐藏/显示提问', showQuestion)
-    GM_registerMenuCommand('开启/关闭标题栏伪装', showFakeTitle)
     // 区分搜索问答页面
     let webUrl = window.location.pathname
     let pageType
@@ -37,12 +32,14 @@
         document.querySelector("link[rel*='icon']") ||
         document.createElement('link')
     window.onload = function () {
-        if (GM_getValue('fakeTitle') === undefined) {
-            GM_setValue('fakeTitle', true)
-            GM_setValue('showQuestion', true)
+        const sConfig = window.localStorage
+        if (sConfig.fakeTitle === undefined) {
+            sConfig.fakeTitle = 'true'
+            sConfig.showQuestion = 'true'
         }
         // 改下标题
-        if (GM_getValue('fakeTitle')) {
+        if (sConfig.fakeTitle === 'true') {
+            console.log(sConfig.fakeTitle)
             window.document.title = fake_title
             link.type = 'image/x-icon'
             link.rel = 'shortcut icon'
@@ -60,33 +57,43 @@
                 fixHomePage()
                 break
         }
+        this.document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'T') {
+                showFakeTitle()
+            } else if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'Q') {
+                showQuestion()
+            }
+        })
     }
     function showFakeTitle () {
-        if (GM_getValue('fakeTitle') === true) {
-            GM_setValue('fakeTitle', false)
+        const sConfig = window.localStorage
+        if (sConfig.fakeTitle === 'true') {
+            sConfig.fakeTitle = 'false'
             alert('不伪装标题栏')
         } else {
-            GM_setValue('fakeTitle', true)
+            sConfig.fakeTitle = 'true'
             alert('伪装标题栏')
         }
         window.location.reload()
     }
     function showQuestion () {
-        if (GM_getValue('showQuestion') === true) {
-            GM_setValue('showQuestion', false)
+        const sConfig = window.localStorage
+        if (sConfig.showQuestion === 'true') {
+            sConfig.showQuestion = 'false'
             alert('显示提问标题')
         } else {
-            GM_setValue('showQuestion', true)
+            sConfig.showQuestion = 'true'
             alert('隐藏提问标题')
         }
         window.location.reload()
     }
     function fixQuestionPage () {
+        const sConfig = window.localStorage
         let cssFix = document.createElement('style')
         // 吸底的评论栏
         cssFix.innerHTML += '.RichContent-actions{bottom:auto !important;}'
         // 直接屏蔽顶部问题相关
-        if (GM_getValue('showQuestion')) {
+        if (sConfig.showQuestion === 'true') {
             cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
             cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
             cssFix.innerHTML += '.Question-main{margin:0 !important;}'
