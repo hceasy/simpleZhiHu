@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.14
+// @version         0.1.15
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -57,9 +57,9 @@
                 break
         }
         this.document.addEventListener('keydown', function (e) {
-            if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'T') {
+            if (e.ctrlKey && e.shiftKey && e.key === 'T') {
                 showFakeTitle()
-            } else if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'Q') {
+            } else if (e.ctrlKey && e.shiftKey && e.key === 'Q') {
                 showQuestion()
             }
         })
