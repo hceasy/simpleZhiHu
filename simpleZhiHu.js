@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.15
+// @version         0.1.16
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -10,6 +10,7 @@
 // @match			*://www.zhihu.com/hot
 // @match			*://www.zhihu.com/follow
 // @match			*://www.zhihu.com/
+// @match           *://www.zhihu.com/signin*
 // @run-at          document-end
 // ==/UserScript==
 ; (function () {
@@ -23,11 +24,13 @@
         pageType = 'search'
     } else if (webUrl.indexOf('hot') >= 0 || webUrl.indexOf('follow') >= 0 || window.location.href === "https://www.zhihu.com/") {
         pageType = 'hot'
+    } else if (webUrl.indexOf('signin') >= 0) {
+        pageType = 'signin'
     }
     // 用GitHub的图标替换
     let fake_title = 'GitHub'
+    // icon也改了
     let fake_icon = 'https://github.githubassets.com/favicon.ico'
-    // icon也改了.(IE邪教,凉了,没的治)
     let link =
         document.querySelector("link[rel*='icon']") ||
         document.createElement('link')
@@ -55,6 +58,9 @@
             case 'hot':
                 fixHomePage()
                 break
+            case 'signin':
+                addHotList()
+                break
         }
         this.document.addEventListener('keydown', function (e) {
             if (e.ctrlKey && e.shiftKey && e.key === 'T') {
@@ -63,6 +69,18 @@
                 showQuestion()
             }
         })
+    }
+    function addHotList () {
+        let signButton = document.querySelector('.SignFlow-submitButton')
+        if (signButton) {
+            let hotButton = signButton.cloneNode(false)
+            let parent = signButton.parentNode;
+            parent.appendChild(hotButton)
+            hotButton.innerHTML = '不想登录,去热榜转转'
+            hotButton.onclick = function () {
+                location.href = 'https://www.zhihu.com/billboard'
+            }
+        }
     }
     function showFakeTitle () {
         const sConfig = window.localStorage
