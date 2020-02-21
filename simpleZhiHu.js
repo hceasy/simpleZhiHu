@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.16
+// @version         0.1.17
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -115,6 +115,9 @@
             cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
             cssFix.innerHTML += '.Question-main{margin:0 !important;}'
         }
+        // 问题页面登录弹窗
+        cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
+        cssFix.innerHTML += '.signFlowModal{display:none !important;}'
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
@@ -140,8 +143,8 @@
         // 内容撑满
         document.getElementsByClassName('Question-main')[0].style.width = 'auto'
         document.getElementsByClassName('Question-main')[0].style.padding = '0'
-        document.getElementsByClassName('Question-mainColumn')[0].style.width =
-            '100%'
+        document.getElementsByClassName('Question-mainColumn')[0].style.margin =
+            '0 auto'
     }
     function fixSearchPage () {
         let cssFix = document.createElement('style')
