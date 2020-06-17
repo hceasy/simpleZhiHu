@@ -5,12 +5,7 @@
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
-// @match           *://www.zhihu.com/question/*
-// @match			*://www.zhihu.com/search*
-// @match			*://www.zhihu.com/hot
-// @match			*://www.zhihu.com/follow
-// @match			*://www.zhihu.com/
-// @match           *://www.zhihu.com/signin*
+// @match			*://www.zhihu.com/*
 // @run-at          document-end
 // ==/UserScript==
 ; (function () {
@@ -121,7 +116,7 @@
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
-        cssFix.innerHTML += '.QuestionHeader-content{width:100% !important;}'
+        // cssFix.innerHTML += '.QuestionHeader-content{width:100% !important;}'
         cssFix.innerHTML += '.QuestionHeader{min-width:auto !important;}'
         // 内容图片/视频最大300px
         cssFix.innerHTML += '.origin_image{max-width:300px !important;}'
@@ -132,6 +127,10 @@
         // 点赞
         cssFix.innerHTML +=
             '.VoteButton{color:#999 !important;background: none; !important}'
+        cssFix.innerHTML +=
+            '.Button--primary.Button--blue{color:#999 !important;background: none; !important}'
+        cssFix.innerHTML +=
+            '.Button--blue{color:#999 !important;border-color: #999 !important;}'
         document.getElementsByTagName('head')[0].appendChild(cssFix)
         // 右侧问题相关
         document.getElementsByClassName('QuestionHeader-side')[1].style.display =
@@ -141,7 +140,7 @@
         // 顶部问题标题
         document.getElementsByTagName('header')[0].style.display = 'none'
         // 内容撑满
-        document.getElementsByClassName('Question-main')[0].style.width = 'auto'
+        // document.getElementsByClassName('Question-main')[0].style.width = 'auto'
         document.getElementsByClassName('Question-main')[0].style.padding = '0'
         document.getElementsByClassName('Question-mainColumn')[0].style.margin =
             '0 auto'
