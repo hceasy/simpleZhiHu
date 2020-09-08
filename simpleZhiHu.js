@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.17
+// @version         0.1.18
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -15,8 +15,12 @@
 // ==/UserScript==
 ; (function () {
     'use strict'
+    // 设置菜单
+    const menuHTML = '<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>'
+    const menuCss = '.extMenu {position: fixed;top: 10px;right: 10px;width: 15px;height: 19px;font-size: 12px;overflow: hidden;}.extMenu:hover {width: auto;height: auto;border: 1px solid #000;padding:10px;}.extMenu:hover img {display: none;}'
+
     // 区分搜索问答页面
-    let webUrl = window.location.pathname
+    const webUrl = window.location.pathname
     let pageType
     if (webUrl.indexOf('question') >= 0) {
         pageType = 'question'
@@ -27,19 +31,40 @@
     } else if (webUrl.indexOf('signin') >= 0) {
         pageType = 'signin'
     }
+
     // 用GitHub的图标替换
-    let fake_title = 'GitHub'
+    const fake_title = 'GitHub'
     // icon也改了
-    let fake_icon = 'https://github.githubassets.com/favicon.ico'
+    const fake_icon = 'https://github.githubassets.com/favicon.ico'
     let link =
         document.querySelector("link[rel*='icon']") ||
         document.createElement('link')
     window.onload = function () {
         const sConfig = window.localStorage
-        if (sConfig.fakeTitle === undefined) {
+        if (sConfig.fakeTitle === undefined || sConfig.showQuestion === undefined || sConfig.blackList === undefined) {
             sConfig.fakeTitle = 'true'
             sConfig.showQuestion = 'true'
+            sConfig.blackList = ''
         }
+        // 添加菜单
+        let cssFix = document.createElement('style')
+        cssFix.innerHTML += menuCss
+        document.getElementsByTagName('head')[0].appendChild(cssFix)
+        let htmlFix = document.createElement('div')
+        htmlFix.innerHTML += menuHTML
+        document.body.appendChild(htmlFix)
+
+        // 绑定操作
+        document.getElementById('showFakeTitle').checked = JSON.parse(sConfig.fakeTitle)
+        document.getElementById('showQuestion').checked = JSON.parse(sConfig.showQuestion)
+        document.getElementById('blackList').value = sConfig.blackList
+        document.getElementById('saveConfig').addEventListener('click', function () {
+            sConfig.fakeTitle = document.getElementById('showFakeTitle').checked
+            sConfig.showQuestion = document.getElementById('showQuestion').checked
+            sConfig.blackList = document.getElementById('blackList').value.split(',')
+            window.location.reload()
+        })
+
         // 改下标题
         if (sConfig.fakeTitle === 'true') {
             window.document.title = fake_title
@@ -62,13 +87,9 @@
                 addHotList()
                 break
         }
-        this.document.addEventListener('keydown', function (e) {
-            if (e.ctrlKey && e.shiftKey && e.key === 'T') {
-                showFakeTitle()
-            } else if (e.ctrlKey && e.shiftKey && e.key === 'Q') {
-                showQuestion()
-            }
-        })
+    }
+    window.onscroll = function () {
+        hideAuthor()
     }
     function addHotList () {
         let signButton = document.querySelector('.SignFlow-submitButton')
@@ -82,35 +103,13 @@
             }
         }
     }
-    function showFakeTitle () {
-        const sConfig = window.localStorage
-        if (sConfig.fakeTitle === 'true') {
-            sConfig.fakeTitle = 'false'
-            alert('不伪装标题栏')
-        } else {
-            sConfig.fakeTitle = 'true'
-            alert('伪装标题栏')
-        }
-        window.location.reload()
-    }
-    function showQuestion () {
-        const sConfig = window.localStorage
-        if (sConfig.showQuestion === 'true') {
-            sConfig.showQuestion = 'false'
-            alert('显示提问标题')
-        } else {
-            sConfig.showQuestion = 'true'
-            alert('隐藏提问标题')
-        }
-        window.location.reload()
-    }
     function fixQuestionPage () {
         const sConfig = window.localStorage
         let cssFix = document.createElement('style')
         // 吸底的评论栏
         cssFix.innerHTML += '.RichContent-actions{bottom:auto !important;}'
         // 直接屏蔽顶部问题相关
-        if (sConfig.showQuestion === 'true') {
+        if (sConfig.showQuestion === 'false') {
             cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
             cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
             cssFix.innerHTML += '.Question-main{margin:0 !important;}'
@@ -132,6 +131,9 @@
         // 点赞
         cssFix.innerHTML +=
             '.VoteButton{color:#999 !important;background: none; !important}'
+        // 广告商品链接
+        cssFix.innerHTML +=
+            '.RichText-MCNLinkCardContainer{display:none !important;}'
         document.getElementsByTagName('head')[0].appendChild(cssFix)
         // 右侧问题相关
         document.getElementsByClassName('QuestionHeader-side')[1].style.display =
@@ -179,5 +181,20 @@
         cssFix.innerHTML += '.Topstory-mainColumn{width:100% !important;}'
         document.getElementsByTagName('head')[0].appendChild(cssFix)
     }
-    //
+    function hideAuthor () {
+        const answerList = document.getElementsByClassName('List-item')
+        for (let index = 0; index < answerList.length; index++) {
+            const obj = answerList[index]
+            const key = JSON.parse(obj.getElementsByTagName("div")[0].getAttribute("data-zop"))
+            if (key === null) {
+                return
+            }
+            const blackList = window.localStorage.blackList.split(',')
+            blackList.forEach(name => {
+                if (key.authorName === name) {
+                    obj.style.display = 'none'
+                }
+            });
+        }
+    }
 })()
