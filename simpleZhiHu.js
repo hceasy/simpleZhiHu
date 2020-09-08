@@ -6,10 +6,10 @@
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     有些时候看知乎不是那么方便,你懂的.
 // @match           *://www.zhihu.com/question/*
-// @match			*://www.zhihu.com/search*
-// @match			*://www.zhihu.com/hot
-// @match			*://www.zhihu.com/follow
-// @match			*://www.zhihu.com/
+// @match           *://www.zhihu.com/search*
+// @match           *://www.zhihu.com/hot
+// @match           *://www.zhihu.com/follow
+// @match           *://www.zhihu.com/
 // @match           *://www.zhihu.com/signin*
 // @run-at          document-end
 // ==/UserScript==
