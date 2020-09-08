@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.18
+// @version         0.1.19
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -18,6 +18,7 @@
     // 设置菜单
     const menuHTML = '<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>'
     const menuCss = '.extMenu {position: fixed;top: 10px;right: 10px;width: 15px;height: 19px;font-size: 12px;overflow: hidden;}.extMenu:hover {width: auto;height: auto;border: 1px solid #000;padding:10px;}.extMenu:hover img {display: none;}'
+    const blinkLiu = '.extMenu{animation:jumpLiu 5s infinite}@keyframes jumpLiu{0%{right:10px;background-color:#264653}20%{right:20px;background-color:#2a9d8f}40%{right:30px;background-color:#e9c46a}60%{right:10px;background-color:#f4a261}80%{right:20px;background-color:#e76f51}100%{right:10px;background-color:#264653}}'
 
     // 区分搜索问答页面
     const webUrl = window.location.pathname
@@ -49,6 +50,9 @@
         // 添加菜单
         let cssFix = document.createElement('style')
         cssFix.innerHTML += menuCss
+        if (typeof (sConfig.blinkLiu) === 'undefined') {
+            cssFix.innerHTML += blinkLiu
+        }
         document.getElementsByTagName('head')[0].appendChild(cssFix)
         let htmlFix = document.createElement('div')
         htmlFix.innerHTML += menuHTML
@@ -62,6 +66,7 @@
             sConfig.fakeTitle = document.getElementById('showFakeTitle').checked
             sConfig.showQuestion = document.getElementById('showQuestion').checked
             sConfig.blackList = document.getElementById('blackList').value.split(',')
+            sConfig.blinkLiu = false
             window.location.reload()
         })
 
