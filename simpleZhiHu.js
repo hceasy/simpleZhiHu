@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.19
+// @version         0.1.20
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -10,6 +10,7 @@
 // @match           *://www.zhihu.com/hot
 // @match           *://www.zhihu.com/follow
 // @match           *://www.zhihu.com/
+// @match           *://zhuanlan.zhihu.com/*
 // @match           *://www.zhihu.com/signin*
 // @run-at          document-end
 // ==/UserScript==
@@ -21,16 +22,19 @@
     const blinkLiu = '.extMenu{animation:jumpLiu 5s infinite}@keyframes jumpLiu{0%{right:10px;background-color:#264653}20%{right:20px;background-color:#2a9d8f}40%{right:30px;background-color:#e9c46a}60%{right:10px;background-color:#f4a261}80%{right:20px;background-color:#e76f51}100%{right:10px;background-color:#264653}}'
 
     // 区分搜索问答页面
-    const webUrl = window.location.pathname
+    const pathName = window.location.pathname
+    const hostName = window.location.hostname
     let pageType
-    if (webUrl.indexOf('question') >= 0) {
+    if (pathName.indexOf('question') >= 0) {
         pageType = 'question'
-    } else if (webUrl.indexOf('search') >= 0) {
+    } else if (pathName.indexOf('search') >= 0) {
         pageType = 'search'
-    } else if (webUrl.indexOf('hot') >= 0 || webUrl.indexOf('follow') >= 0 || window.location.href === "https://www.zhihu.com/") {
+    } else if (pathName.indexOf('hot') >= 0 || pathName.indexOf('follow') >= 0 || window.location.href === "https://www.zhihu.com/") {
         pageType = 'hot'
-    } else if (webUrl.indexOf('signin') >= 0) {
+    } else if (pathName.indexOf('signin') >= 0) {
         pageType = 'signin'
+    } else if (hostName === "zhuanlan.zhihu.com") {
+        pageType = 'zhuanlan'
     }
 
     // 用GitHub的图标替换
@@ -90,6 +94,9 @@
                 break
             case 'signin':
                 addHotList()
+                break
+            case 'zhuanlan':
+                fixZhuanLan()
                 break
         }
     }
@@ -178,9 +185,13 @@
         cssFix.innerHTML += '.RichText-video{max-width:300px !important;}'
         document.getElementsByTagName('head')[0].appendChild(cssFix)
     }
+    function fixZhuanLan () {
+        let cssFix = document.createElement('style')
+        cssFix.innerHTML += '.Recommendations-Main{display:none !important;}'
+        document.getElementsByTagName('head')[0].appendChild(cssFix)
+    }
     function fixHomePage () {
         let cssFix = document.createElement('style')
-        // header
         cssFix.innerHTML += '.GlobalSideBar{display:none !important;}'
         cssFix.innerHTML += '.Topstory-container{width:100% !important;padding:0 !important}'
         cssFix.innerHTML += '.Topstory-mainColumn{width:100% !important;}'
