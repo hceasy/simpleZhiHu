@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.22
+// @version         0.1.23
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -145,6 +145,11 @@
         // 点赞
         cssFix.innerHTML +=
             '.VoteButton{color:#999 !important;background: none; !important}'
+        // 评论展开宽度
+        cssFix.innerHTML += '.Modal--fullPage{width:650px}'
+        // 评论展开关闭按钮复位
+        cssFix.innerHTML += '.Modal-closeButton{right:0;}'
+        cssFix.innerHTML += '.Modal-closeIcon{fill:#919191;}'
         // 广告商品链接
         cssFix.innerHTML +=
             '.RichText-MCNLinkCardContainer{display:none !important;}'
