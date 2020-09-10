@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.21
+// @version         0.1.22
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -132,8 +132,10 @@
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
-        cssFix.innerHTML += '.QuestionHeader-content{width:100% !important;}'
-        cssFix.innerHTML += '.QuestionHeader{min-width:auto !important;}'
+        cssFix.innerHTML += '.QuestionHeader-content{width:694px !important;padding:0;}'
+        cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
+        cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
+        cssFix.innerHTML += '.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}'
         // 内容图片/视频最大300px
         cssFix.innerHTML += '.origin_image{max-width:300px !important;}'
         cssFix.innerHTML += '.RichText-video{max-width:300px !important;}'
