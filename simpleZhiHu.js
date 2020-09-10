@@ -4,7 +4,7 @@
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
-// @description     有些时候看知乎不是那么方便,你懂的.
+// @description     优化阅读界面,免登录,广告去除,黑名单功能.
 // @match           *://www.zhihu.com/question/*
 // @match           *://www.zhihu.com/search*
 // @match           *://www.zhihu.com/hot
