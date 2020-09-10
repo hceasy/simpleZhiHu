@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.20
+// @version         0.1.21
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -146,6 +146,9 @@
         // 广告商品链接
         cssFix.innerHTML +=
             '.RichText-MCNLinkCardContainer{display:none !important;}'
+        // 夹缝广告
+        cssFix.innerHTML +=
+            '.Pc-word{display:none !important;}'
         document.getElementsByTagName('head')[0].appendChild(cssFix)
         // 右侧问题相关
         document.getElementsByClassName('QuestionHeader-side')[1].style.display =
