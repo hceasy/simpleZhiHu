@@ -39,7 +39,13 @@
 
 ### 效果
 
-![](https://hceasy.com/app/demo.png)
+![](https://github.com/hceasy/simpleZhiHu/blob/master/screenshot/20200911160558-min.png)
+
+![](https://github.com/hceasy/simpleZhiHu/blob/master/screenshot/20200911160603-min.png)
+
+![](https://github.com/hceasy/simpleZhiHu/blob/master/screenshot/20200911160615-min.png)
+
+![](https://github.com/hceasy/simpleZhiHu/blob/master/screenshot/20200911160630-min.png)
 
 ### 备注
 
