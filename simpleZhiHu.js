@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.23
+// @version         0.1.24
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -136,6 +136,11 @@
         cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
         cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
         cssFix.innerHTML += '.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}'
+        // 未展开时内容居中
+        cssFix.innerHTML += '.ListShortcut{margin:0 auto;}'
+        // 展开时居中
+        cssFix.innerHTML += '.Question-sideColumn{display:none;}'
+        cssFix.innerHTML += '.Question-mainColumn{margin:0 auto;}'
         // 内容图片/视频最大300px
         cssFix.innerHTML += '.origin_image{max-width:300px !important;}'
         cssFix.innerHTML += '.RichText-video{max-width:300px !important;}'
