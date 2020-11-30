@@ -52,6 +52,7 @@
             sConfig.blackList = ''
         }
         // 不登陆不让滚动
+        let modelsNum = 0
         let fixTimer = setInterval(() => {
             const mainHtml = document.getElementsByTagName('html')[0]
             if (mainHtml.style.overflow === 'hidden') {
@@ -59,11 +60,15 @@
             }
             // 点击无效修复
             let modals = document.getElementsByClassName('Modal-enter-done')
+            if (modelsNum >= 1) {
+                return
+            }
             for (let index = 0; index < modals.length; index++) {
                 let node = modals[index]
                 if (node.parentNode) {
                     node.parentNode.removeChild(node);
                 }
+                modelsNum ++
             }
         }, 200);
         // 添加菜单
