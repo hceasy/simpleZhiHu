@@ -60,7 +60,8 @@
             }
             // 点击无效修复
             let modals = document.getElementsByClassName('Modal-enter-done')
-            if (modelsNum >= 1) {
+            console.log(modelsNum)
+            if (modelsNum > 1) {
                 return
             }
             for (let index = 0; index < modals.length; index++) {
