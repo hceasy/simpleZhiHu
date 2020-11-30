@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.24
+// @version         0.1.25
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -51,6 +51,13 @@
             sConfig.showQuestion = 'true'
             sConfig.blackList = ''
         }
+        // 不登陆不让滚动
+        let fixTimer = setInterval(() => {
+            const mainHtml = document.getElementsByTagName('html')[0]
+            if (mainHtml.style.overflow === 'hidden') {
+                mainHtml.style.overflow = 'auto'
+            }
+        }, 200);
         // 添加菜单
         let cssFix = document.createElement('style')
         cssFix.innerHTML += menuCss
