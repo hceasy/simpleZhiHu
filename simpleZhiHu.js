@@ -60,7 +60,6 @@
             }
             // 点击无效修复
             let modals = document.getElementsByClassName('Modal-enter-done')
-            console.log(modelsNum)
             if (modelsNum > 1) {
                 return
             }
