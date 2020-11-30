@@ -57,15 +57,15 @@
             if (mainHtml.style.overflow === 'hidden') {
                 mainHtml.style.overflow = 'auto'
             }
-        }, 200);
-        // 点击无效修复
-        let modals = document.getElementsByClassName('Modal-enter-done')
-        for (let index = 0; index < modals.length; index++) {
-            let node = modals[index]
-            if (node.parentNode) {
-                node.parentNode.removeChild(node);
+            // 点击无效修复
+            let modals = document.getElementsByClassName('Modal-enter-done')
+            for (let index = 0; index < modals.length; index++) {
+                let node = modals[index]
+                if (node.parentNode) {
+                    node.parentNode.removeChild(node);
+                }
             }
-        }
+        }, 200);
         // 添加菜单
         let cssFix = document.createElement('style')
         cssFix.innerHTML += menuCss
