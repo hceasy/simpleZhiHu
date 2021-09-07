@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.27
+// @version         0.1.28
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -237,7 +237,7 @@
         const answerList = document.getElementsByClassName('List-item')
         for (let index = 0; index < answerList.length; index++) {
             const obj = answerList[index]
-            const key = JSON.parse(obj.getElementsByTagName("div")[0].getAttribute("data-zop"))
+            const key = JSON.parse(obj.getElementsByTagName("div")[0].firstChild.getAttribute("data-zop"))
             if (key === null) {
                 return
             }
