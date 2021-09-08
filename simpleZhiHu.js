@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.28
+// @version         0.1.29
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -60,17 +60,17 @@
                 mainHtml.style.overflow = 'auto'
             }
             // 点击无效修复
-            let modals = document.getElementsByClassName('Modal-enter-done')
-            if (modelsNum > 1) {
-                return
-            }
-            for (let index = 0; index < modals.length; index++) {
-                let node = modals[index]
-                if (node.parentNode) {
-                    node.parentNode.removeChild(node);
-                }
-                modelsNum ++
-            }
+            // let modals = document.getElementsByClassName('Modal-enter-done')
+            // if (modelsNum > 1) {
+            //    return
+            // }
+            // for (let index = 0; index < modals.length; index++) {
+            //    let node = modals[index]
+            //    if (node.parentNode) {
+            //        node.parentNode.removeChild(node);
+            //    }
+            //    modelsNum ++
+            // }
         }, 200);
         // 添加菜单
         let cssFix = document.createElement('style')
