@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.28
+// @version         0.1.29
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -18,7 +18,7 @@
 ; (function () {
     'use strict'
     // 设置菜单
-    const menuHTML = '<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>'
+    const menuHTML = '<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>页面宽度(694px/80%) <input id="pageWidth" type="text"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>'
     const menuCss = '.extMenu {position: fixed;top: 10px;right: 10px;width: 15px;height: 19px;font-size: 12px;overflow: hidden;}.extMenu:hover {width: auto;height: auto;border: 1px solid #000;padding:10px;}.extMenu:hover img {display: none;}'
     const blinkLiu = '.extMenu{animation:jumpLiu 5s infinite}@keyframes jumpLiu{0%{right:10px;background-color:#264653}20%{right:20px;background-color:#2a9d8f}40%{right:30px;background-color:#e9c46a}60%{right:10px;background-color:#f4a261}80%{right:20px;background-color:#e76f51}100%{right:10px;background-color:#264653}}'
 
@@ -47,10 +47,11 @@
         document.createElement('link')
     window.onload = function () {
         const sConfig = window.localStorage
-        if (sConfig.fakeTitle === undefined || sConfig.showQuestion === undefined || sConfig.blackList === undefined) {
+        if (sConfig.fakeTitle === undefined || sConfig.showQuestion === undefined || sConfig.blackList === undefined || sConfig.pageWidth === undefined) {
             sConfig.fakeTitle = 'true'
             sConfig.showQuestion = 'true'
             sConfig.blackList = ''
+            sConfig.pageWidth = '694px'
         }
         // 不登陆不让滚动
         let modelsNum = 0
@@ -60,17 +61,17 @@
                 mainHtml.style.overflow = 'auto'
             }
             // 点击无效修复
-            let modals = document.getElementsByClassName('Modal-enter-done')
-            if (modelsNum > 1) {
-                return
-            }
-            for (let index = 0; index < modals.length; index++) {
-                let node = modals[index]
-                if (node.parentNode) {
-                    node.parentNode.removeChild(node);
-                }
-                modelsNum ++
-            }
+            // let modals = document.getElementsByClassName('Modal-enter-done')
+            // if (modelsNum > 1) {
+            //    return
+            // }
+            // for (let index = 0; index < modals.length; index++) {
+            //    let node = modals[index]
+            //    if (node.parentNode) {
+            //        node.parentNode.removeChild(node);
+            //    }
+            //    modelsNum ++
+            // }
         }, 200);
         // 添加菜单
         let cssFix = document.createElement('style')
@@ -87,10 +88,12 @@
         document.getElementById('showFakeTitle').checked = JSON.parse(sConfig.fakeTitle)
         document.getElementById('showQuestion').checked = JSON.parse(sConfig.showQuestion)
         document.getElementById('blackList').value = sConfig.blackList
+        document.getElementById('pageWidth').value = sConfig.pageWidth
         document.getElementById('saveConfig').addEventListener('click', function () {
             sConfig.fakeTitle = document.getElementById('showFakeTitle').checked
             sConfig.showQuestion = document.getElementById('showQuestion').checked
             sConfig.blackList = document.getElementById('blackList').value.split(',')
+            sConfig.pageWidth = document.getElementById('pageWidth').value
             sConfig.blinkLiu = false
             window.location.reload()
         })
@@ -106,6 +109,7 @@
         switch (pageType) {
             case 'question':
                 fixQuestionPage()
+                fixPageWidth()
                 break
             case 'search':
                 fixSearchPage()
@@ -153,7 +157,7 @@
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
-        cssFix.innerHTML += '.QuestionHeader-content{width:694px !important;padding:0;}'
+        // cssFix.innerHTML += '.QuestionHeader-content{width:694px !important;padding:0;}'
         cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
         cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
         cssFix.innerHTML += '.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}'
@@ -248,5 +252,14 @@
                 }
             });
         }
+    }
+    function fixPageWidth(){
+        let page = document.querySelector(".Question-mainColumn")
+        let header = document.querySelector(".QuestionHeader")
+        let headerCont = document.getElementsByClassName("QuestionHeader-content")
+        page.style.width = window.localStorage.pageWidth
+        header.style.width = window.localStorage.pageWidth
+        console.log(headerCont)
+        headerCont[1].style.width = '100%'
     }
 })()
