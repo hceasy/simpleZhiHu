@@ -5,6 +5,7 @@
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     优化阅读界面,免登录,广告去除,黑名单功能.
+// @license         BSD-3-Clause
 // @match           *://www.zhihu.com/question/*
 // @match           *://www2.zhihu.com/question/*
 // @match           *://www.zhihu.com/search*
