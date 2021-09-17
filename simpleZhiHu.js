@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.29
+// @version         0.1.30
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
 // @description     优化阅读界面,免登录,广告去除,黑名单功能.
-// @license         BSD-3-Clause
 // @match           *://www.zhihu.com/question/*
 // @match           *://www2.zhihu.com/question/*
 // @match           *://www.zhihu.com/search*
@@ -155,6 +154,7 @@
         // 问题页面登录弹窗
         cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
         cssFix.innerHTML += '.signFlowModal{display:none !important;}'
+        cssFix.innerHTML += '.Modal-wrapper.Modal-enter-done{display:none !important;}'
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
