@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.30
+// @version         0.1.31
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -58,7 +58,7 @@
         let fixTimer = setInterval(() => {
             const mainHtml = document.getElementsByTagName('html')[0]
             if (mainHtml.style.overflow === 'hidden') {
-                mainHtml.style.overflow = 'auto'
+                mainHtml.style.overflow = ''
             }
             // 点击无效修复
             // let modals = document.getElementsByClassName('Modal-enter-done')
@@ -152,15 +152,17 @@
             cssFix.innerHTML += '.Question-main{margin:0 !important;}'
         }
         // 问题页面登录弹窗
-        cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
-        cssFix.innerHTML += '.signFlowModal{display:none !important;}'
-        cssFix.innerHTML += '.Modal-wrapper.Modal-enter-done{display:none !important;}'
+        //cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
+        //cssFix.innerHTML += '.signFlowModal{display:none !important;}'
+        //cssFix.innerHTML += '.Modal-wrapper.Modal-enter-done{display:none !important;}'
+        const but = document.getElementsByClassName('Button Modal-closeButton Button--plain')[0]
+        but.click()
         // 顶部关键词
         cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
         // 问题相关撑满
-        // cssFix.innerHTML += '.QuestionHeader-content{width:694px !important;padding:0;}'
+        cssFix.innerHTML += '.QuestionHeader-content{padding-left:0}'
         cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
-        cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
+        // cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
         cssFix.innerHTML += '.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}'
         // 未展开时内容居中
         cssFix.innerHTML += '.ListShortcut{margin:0 auto;}'
