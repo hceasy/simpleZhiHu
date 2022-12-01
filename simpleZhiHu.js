@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.31
+// @version         0.1.32
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -60,18 +60,6 @@
             if (mainHtml.style.overflow === 'hidden') {
                 mainHtml.style.overflow = ''
             }
-            // 点击无效修复
-            // let modals = document.getElementsByClassName('Modal-enter-done')
-            // if (modelsNum > 1) {
-            //    return
-            // }
-            // for (let index = 0; index < modals.length; index++) {
-            //    let node = modals[index]
-            //    if (node.parentNode) {
-            //        node.parentNode.removeChild(node);
-            //    }
-            //    modelsNum ++
-            // }
         }, 200);
         // 添加菜单
         let cssFix = document.createElement('style')
@@ -154,7 +142,7 @@
         // 问题页面登录弹窗
         //cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
         //cssFix.innerHTML += '.signFlowModal{display:none !important;}'
-        //cssFix.innerHTML += '.Modal-wrapper.Modal-enter-done{display:none !important;}'
+        cssFix.innerHTML += '.ysn1om,.css-1hwwfws,.css-1ynzxqw{display:none !important;}'
         const but = document.getElementsByClassName('Button Modal-closeButton Button--plain')[0]
         but.click()
         // 顶部关键词
