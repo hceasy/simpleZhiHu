@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.32
+// @version         0.1.33
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -112,6 +112,7 @@
                 fixZhuanLan()
                 break
         }
+        hideAuthor()
     }
     window.onscroll = function () {
         hideAuthor()
@@ -232,7 +233,8 @@
         const answerList = document.getElementsByClassName('List-item')
         for (let index = 0; index < answerList.length; index++) {
             const obj = answerList[index]
-            const key = JSON.parse(obj.getElementsByTagName("div")[0].firstChild.getAttribute("data-zop"))
+            console.log(obj)
+            const key = JSON.parse(obj.getElementsByClassName('ContentItem AnswerItem')[0].getAttribute("data-zop"))
             if (key === null) {
                 return
             }
@@ -250,7 +252,6 @@
         let headerCont = document.getElementsByClassName("QuestionHeader-content")
         page.style.width = window.localStorage.pageWidth
         header.style.width = window.localStorage.pageWidth
-        console.log(headerCont)
         headerCont[1].style.width = '100%'
     }
 })()
