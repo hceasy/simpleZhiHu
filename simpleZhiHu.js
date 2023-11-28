@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            极简知乎
-// @version         0.1.33
+// @version         0.1.34
 // @author          hceasy
 // @namespace       https://hceasy.com
 // @supportURL      https://github.com/hceasy/simpleZhiHu/issues
@@ -18,9 +18,9 @@
 ; (function () {
     'use strict'
     // 设置菜单
-    const menuHTML = '<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>页面宽度(694px/80%) <input id="pageWidth" type="text"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>'
-    const menuCss = '.extMenu {position: fixed;top: 10px;right: 10px;width: 15px;height: 19px;font-size: 12px;overflow: hidden;}.extMenu:hover {width: auto;height: auto;border: 1px solid #000;padding:10px;}.extMenu:hover img {display: none;}'
-    const blinkLiu = '.extMenu{animation:jumpLiu 5s infinite}@keyframes jumpLiu{0%{right:10px;background-color:#264653}20%{right:20px;background-color:#2a9d8f}40%{right:30px;background-color:#e9c46a}60%{right:10px;background-color:#f4a261}80%{right:20px;background-color:#e76f51}100%{right:10px;background-color:#264653}}'
+    const menuHTML = `<div class="extMenu"><img src="https://zhstatic.zhihu.com/assets/error/liukanshan_wire.svg" alt="刘看山" width="15px" height="19px"><p>显示提问标题栏 <input id="showQuestion" type="checkbox"></p><p>浏览器标题替换 <input id="showFakeTitle" type="checkbox"></p><p>页面宽度(694px/80%) <input id="pageWidth" type="text"></p><p>黑名单列表:</p><p><textarea placeholder="刘看山,匿名用户" id="blackList" cols="20" rows="2"></textarea></p><p><button id="saveConfig">保存</button></p></div>`
+    const menuCss = `.extMenu {position: fixed;top: 10px;right: 10px;width: 15px;height: 19px;font-size: 12px;overflow: hidden;}.extMenu:hover {width: auto;height: auto;border: 1px solid #000;padding:10px;}.extMenu:hover img {display: none;}`
+    const blinkLiu = `.extMenu{animation:jumpLiu 5s infinite}@keyframes jumpLiu{0%{right:10px;background-color:#264653}20%{right:20px;background-color:#2a9d8f}40%{right:30px;background-color:#e9c46a}60%{right:10px;background-color:#f4a261}80%{right:20px;background-color:#e76f51}100%{right:10px;background-color:#264653}}`
 
     // 区分搜索问答页面
     const pathName = window.location.pathname
@@ -133,51 +133,51 @@
         const sConfig = window.localStorage
         let cssFix = document.createElement('style')
         // 吸底的评论栏
-        cssFix.innerHTML += '.RichContent-actions{bottom:auto !important;}'
+        cssFix.innerHTML += `.RichContent-actions{bottom:auto !important;}`
         // 直接屏蔽顶部问题相关
         if (sConfig.showQuestion === 'false') {
-            cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
-            cssFix.innerHTML += '.QuestionHeader{display:none !important;}'
-            cssFix.innerHTML += '.Question-main{margin:0 !important;}'
+            cssFix.innerHTML += `.QuestionHeader-footer{display:none !important;}`
+            cssFix.innerHTML += `.QuestionHeader{display:none !important;}`
+            cssFix.innerHTML += `.Question-main{margin:0 !important;}`
         }
         // 问题页面登录弹窗
-        //cssFix.innerHTML += '.Modal-backdrop{background-color: transparent;}'
-        //cssFix.innerHTML += '.signFlowModal{display:none !important;}'
-        cssFix.innerHTML += '.ysn1om,.css-1hwwfws,.css-1ynzxqw{display:none !important;}'
+        //cssFix.innerHTML += `.Modal-backdrop{background-color: transparent;}`
+        //cssFix.innerHTML += `.signFlowModal{display:none !important;}`
+        cssFix.innerHTML += `.ysn1om,.css-1hwwfws,.css-1ynzxqw{display:none !important;}`
         const but = document.getElementsByClassName('Button Modal-closeButton Button--plain')[0]
         but.click()
         // 顶部关键词
-        cssFix.innerHTML += '.QuestionHeader-tags{display:none !important;}'
+        cssFix.innerHTML += `.QuestionHeader-tags{display:none !important;}`
         // 问题相关撑满
-        cssFix.innerHTML += '.QuestionHeader-content{padding-left:0}'
-        cssFix.innerHTML += '.QuestionHeader-footer{display:none !important;}'
-        // cssFix.innerHTML += '.QuestionHeader-main {margin:10px;}'
-        cssFix.innerHTML += '.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}'
+        cssFix.innerHTML += `.QuestionHeader-content{padding-left:0}`
+        cssFix.innerHTML += `.QuestionHeader-footer{display:none !important;}`
+        // cssFix.innerHTML += `.QuestionHeader-main {margin:10px;}'
+        cssFix.innerHTML += `.QuestionHeader{width:694px;margin:0 auto;padding:0;min-width:auto;}`
         // 未展开时内容居中
-        cssFix.innerHTML += '.ListShortcut{margin:0 auto;}'
+        cssFix.innerHTML += `.ListShortcut{margin:0 auto;}`
         // 展开时居中
-        cssFix.innerHTML += '.Question-sideColumn{display:none;}'
-        cssFix.innerHTML += '.Question-mainColumn{margin:0 auto;}'
+        cssFix.innerHTML += `.Question-sideColumn{display:none;}`
+        cssFix.innerHTML += `.Question-mainColumn{margin:0 auto;}`
         // 内容图片/视频最大300px
-        cssFix.innerHTML += '.origin_image{max-width:300px !important;}'
-        cssFix.innerHTML += '.RichText-video{max-width:300px !important;}'
+        cssFix.innerHTML += `.origin_image{max-width:300px !important;}`
+        cssFix.innerHTML += `.RichText-video{max-width:300px !important;}`
         // 内容链接去特征
         cssFix.innerHTML +=
-            '.LinkCard{margin:auto !important;display:inline !important;}.LinkCard-content{background-color: transparent;}.LinkCard-title{color:#999 !important}'
+            `.LinkCard{margin:auto !important;display:inline !important;}.LinkCard-content{background-color: transparent;}.LinkCard-title{color:#999 !important}`
         // 点赞
         cssFix.innerHTML +=
-            '.VoteButton{color:#999 !important;background: none; !important}'
+            `.VoteButton{color:#999 !important;background: none; !important}`
         // 评论展开宽度
-        cssFix.innerHTML += '.Modal--fullPage{width:650px}'
+        cssFix.innerHTML += `.Modal--fullPage{width:650px}`
         // 评论展开关闭按钮复位
-        cssFix.innerHTML += '.Modal-closeButton{right:0;}'
-        cssFix.innerHTML += '.Modal-closeIcon{fill:#919191;}'
+        cssFix.innerHTML += `.Modal-closeButton{right:0;}`
+        cssFix.innerHTML += `.Modal-closeIcon{fill:#919191;}`
         // 广告商品链接
         cssFix.innerHTML +=
-            '.RichText-MCNLinkCardContainer{display:none !important;}'
+            `.RichText-MCNLinkCardContainer{display:none !important;}`
         // 夹缝广告
         cssFix.innerHTML +=
-            '.Pc-word{display:none !important;}'
+            `.Pc-word{display:none !important;}`
         document.getElementsByTagName('head')[0].appendChild(cssFix)
         // 右侧问题相关
         document.getElementsByClassName('QuestionHeader-side')[1].style.display =
@@ -195,45 +195,48 @@
     function fixSearchPage () {
         let cssFix = document.createElement('style')
         // header
-        cssFix.innerHTML += 'header{display:none !important;}'
+        cssFix.innerHTML += `header{display:none !important;}`
         // SearchTabs
-        cssFix.innerHTML += '.SearchTabs{display:none !important;}'
+        cssFix.innerHTML += `.SearchTabs{display:none !important;}`
         // SearchSideBar
-        cssFix.innerHTML += '.SearchSideBar{display:none !important;}'
+        cssFix.innerHTML += `.SearchSideBar{display:none !important;}`
         // CornerButtons
-        cssFix.innerHTML += '.CornerButtons{display:none !important;}'
+        cssFix.innerHTML +=`.CornerButtons{display:none !important;}`
         // .SearchMain
         cssFix.innerHTML +=
-            '.SearchMain{width:100% !important;margin: 0 !important;}'
+            `.SearchMain{width:100% !important;margin: 0 !important;}`
         // Search-container
         cssFix.innerHTML +=
-            '.Search-container{width: auto !important;min-height: auto !important;margin:none !important;}'
-        cssFix.innerHTML += '.SearchSections{width:auto !important}'
+           `.Search-container{width: auto !important;min-height: auto !important;margin:none !important;}`
+        cssFix.innerHTML += `.SearchSections{width:auto !important}`
         // 点赞
         cssFix.innerHTML +=
-            '.VoteButton{color:#999 !important;background: none; !important}'
+            `.VoteButton{color:#999 !important;background: none; !important}`
         // 内容图片/视频最大300px
-        cssFix.innerHTML += '.origin_image{max-width:300px !important;}'
-        cssFix.innerHTML += '.RichText-video{max-width:300px !important;}'
+        cssFix.innerHTML += `.origin_image{max-width:300px !important;}`
+        cssFix.innerHTML += `.RichText-video{max-width:300px !important;}`
         document.getElementsByTagName('head')[0].appendChild(cssFix)
     }
     function fixZhuanLan () {
         let cssFix = document.createElement('style')
-        cssFix.innerHTML += '.Recommendations-Main{display:none !important;}'
+        cssFix.innerHTML +=`.Recommendations-Main{display:none !important;}`
         document.getElementsByTagName('head')[0].appendChild(cssFix)
     }
     function fixHomePage () {
         let cssFix = document.createElement('style')
-        cssFix.innerHTML += '.GlobalSideBar{display:none !important;}'
-        cssFix.innerHTML += '.Topstory-container{width:100% !important;padding:0 !important}'
-        cssFix.innerHTML += '.Topstory-mainColumn{width:100% !important;}'
+        cssFix.innerHTML += `.GlobalSideBar{display:none !important;}`
+        cssFix.innerHTML += `.Topstory-container{width:100% !important;padding:0 !important}`
+        cssFix.innerHTML += `.Topstory-mainColumn{width:100% !important;}`
         document.getElementsByTagName('head')[0].appendChild(cssFix)
     }
     function hideAuthor () {
         const answerList = document.getElementsByClassName('List-item')
         for (let index = 0; index < answerList.length; index++) {
             const obj = answerList[index]
-            console.log(obj)
+            if(obj.innerHTML.includes('本内容版权为知乎及版权方所有，侵权必究'))
+            {
+                obj.style.display = 'none'
+            }
             const key = JSON.parse(obj.getElementsByClassName('ContentItem AnswerItem')[0].getAttribute("data-zop"))
             if (key === null) {
                 return
